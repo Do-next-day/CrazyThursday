@@ -38,6 +38,7 @@ object Pack {
                 launch { dir.resolve("$id.txt").writeText(str) }
             }
         }
+        dataDir.resolve("end").writeText(end.toString())
     }
 
     private fun json() {
