@@ -10,7 +10,6 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 object Pack {
-
     private val dataDir = File("data")
     private val outDir = File("out").apply { mkdirs() }
 
@@ -49,7 +48,7 @@ object Pack {
                 files.map {
                     async(Dispatchers.IO) { it.name.removeSuffix(".txt") to it.readText() }
                 }.awaitAll()
-            }.flatten().toMap()
+            }.flatten().sortedBy { it.first.toLong() }.toMap()
         }
         val json = Json.encodeToString(map)
         outDir.resolve("pack.json").writeText(json)
